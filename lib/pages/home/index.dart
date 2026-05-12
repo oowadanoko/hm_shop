@@ -4,6 +4,7 @@ import 'package:hm_shop/components/home/hm_hot.dart';
 import 'package:hm_shop/components/home/hm_more_list.dart';
 import 'package:hm_shop/components/home/hm_slider.dart';
 import 'package:hm_shop/components/home/hm_suggestion.dart';
+import 'package:hm_shop/viewmodels/home.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -18,9 +19,24 @@ class _HomeViewState extends State<HomeView> {
     return CustomScrollView(slivers: _getSlivers());
   }
 
+  final List<BannerItem> _bannerList = [
+    BannerItem(
+      id: "1",
+      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg",
+    ),
+    BannerItem(
+      id: "2",
+      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.png",
+    ),
+    BannerItem(
+      id: "3",
+      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg",
+    ),
+  ];
+
   List<Widget> _getSlivers() {
     return [
-      SliverToBoxAdapter(child: HmSlider()),
+      SliverToBoxAdapter(child: HmSlider(bannerList: _bannerList)),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       SliverToBoxAdapter(child: HmCategory()),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
