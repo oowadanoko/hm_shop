@@ -5,6 +5,7 @@ import 'package:hm_shop/components/home/hm_hot.dart';
 import 'package:hm_shop/components/home/hm_more_list.dart';
 import 'package:hm_shop/components/home/hm_slider.dart';
 import 'package:hm_shop/components/home/hm_suggestion.dart';
+import 'package:hm_shop/utils/toast_utils.dart';
 import 'package:hm_shop/viewmodels/home.dart';
 
 class HomeView extends StatefulWidget {
@@ -17,7 +18,18 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: _getSlivers(), controller: _controller);
+    return RefreshIndicator(
+      key: _key,
+      onRefresh: _onRefresh,
+      child: AnimatedContainer(
+        padding: EdgeInsets.only(top: _paddingTop),
+        duration: Duration(milliseconds: 300),
+        child: CustomScrollView(
+          slivers: _getSlivers(),
+          controller: _controller,
+        ),
+      ),
+    );
   }
 
   List<BannerItem> _bannerList = [
@@ -55,45 +67,42 @@ class _HomeViewState extends State<HomeView> {
   int _page = 1;
   bool _isLoading = false;
   bool _hasMore = true;
+  final GlobalKey<RefreshIndicatorState> _key = GlobalKey();
+  double _paddingTop = 0;
 
   @override
   void initState() {
     super.initState();
-    _getBannerList();
-    _getCategoryList();
-    _getSpecialRecommendList();
-    _getInVogueList();
-    _getOneStopList();
-    _getRecommendList();
     _registerEvent();
+    Future.microtask(() {
+      setState(() {
+        _paddingTop = 100;
+      });
+      _key.currentState?.show();
+    });
   }
 
-  void _getBannerList() async {
+  Future<void> _getBannerList() async {
     _bannerList = await getBannerListAPI();
-    setState(() {});
   }
 
-  void _getCategoryList() async {
+  Future<void> _getCategoryList() async {
     _categoryList = await getCategoryListAPI();
-    setState(() {});
   }
 
-  void _getSpecialRecommendList() async {
+  Future<void> _getSpecialRecommendList() async {
     _specialRecommendResult = await getSpecialRecommendListAPI();
-    setState(() {});
   }
 
-  void _getInVogueList() async {
+  Future<void> _getInVogueList() async {
     _inVogueResult = await getInVogueListAPI();
-    setState(() {});
   }
 
-  void _getOneStopList() async {
+  Future<void> _getOneStopList() async {
     _oneStopResult = await getOneStopListAPI();
-    setState(() {});
   }
 
-  void _getRecommendList() async {
+  Future<void> _getRecommendList() async {
     if (_isLoading || !_hasMore) {
       return;
     }
@@ -112,6 +121,22 @@ class _HomeViewState extends State<HomeView> {
           _controller.position.maxScrollExtent - 50) {
         _getRecommendList();
       }
+    });
+  }
+
+  Future<void> _onRefresh() async {
+    _page = 1;
+    _isLoading = false;
+    _hasMore = true;
+    await _getBannerList();
+    await _getCategoryList();
+    await _getSpecialRecommendList();
+    await _getInVogueList();
+    await _getOneStopList();
+    await _getRecommendList();
+    setState(() {
+      _paddingTop = 0;
+      ToastUtils.showToast(context, "加载成功");
     });
   }
 
