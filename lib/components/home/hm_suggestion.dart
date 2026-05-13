@@ -56,6 +56,7 @@ class _HmSuggestionState extends State<HmSuggestion> {
           style: TextStyle(
             fontSize: 22,
             color: const Color.fromARGB(255, 159, 53, 8),
+            fontWeight: FontWeight.bold,
           ),
         ),
         SizedBox(width: 10),
@@ -94,9 +95,6 @@ class _HmSuggestionState extends State<HmSuggestion> {
   }
 
   List<Widget> _getChildren() {
-    if (widget.specialRecommendResult.subTypes.isEmpty) {
-      return [];
-    }
     var list = _getDisplayList();
     return List.generate(list.length, (index) {
       return Expanded(
@@ -121,7 +119,7 @@ class _HmSuggestionState extends State<HmSuggestion> {
             ),
             SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 230, 25, 10),
                 borderRadius: BorderRadius.circular(10),

@@ -40,6 +40,16 @@ class _HomeViewState extends State<HomeView> {
     title: "",
     subTypes: [],
   );
+  SpecialRecommendResult _inVogueResult = SpecialRecommendResult(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
+  SpecialRecommendResult _oneStopResult = SpecialRecommendResult(
+    id: "",
+    title: "",
+    subTypes: [],
+  );
 
   @override
   void initState() {
@@ -47,6 +57,8 @@ class _HomeViewState extends State<HomeView> {
     _getBannerList();
     _getCategoryList();
     _getSpecialRecommendList();
+    _getInVogueList();
+    _getOneStopList();
   }
 
   void _getBannerList() async {
@@ -61,6 +73,16 @@ class _HomeViewState extends State<HomeView> {
 
   void _getSpecialRecommendList() async {
     _specialRecommendResult = await getSpecialRecommendListAPI();
+    setState(() {});
+  }
+
+  void _getInVogueList() async {
+    _inVogueResult = await getInVogueListAPI();
+    setState(() {});
+  }
+
+  void _getOneStopList() async {
+    _oneStopResult = await getOneStopListAPI();
     setState(() {});
   }
 
@@ -80,9 +102,19 @@ class _HomeViewState extends State<HomeView> {
           child: Flex(
             direction: Axis.horizontal,
             children: [
-              Expanded(child: HmHot()),
+              Expanded(
+                child: HmHot(
+                  specialRecommendResult: _inVogueResult,
+                  type: "inVogue",
+                ),
+              ),
               SizedBox(width: 10),
-              Expanded(child: HmHot()),
+              Expanded(
+                child: HmHot(
+                  specialRecommendResult: _oneStopResult,
+                  type: "oneStop",
+                ),
+              ),
             ],
           ),
         ),
