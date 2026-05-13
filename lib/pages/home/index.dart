@@ -50,6 +50,7 @@ class _HomeViewState extends State<HomeView> {
     title: "",
     subTypes: [],
   );
+  List<GoodDetailItem> _recommendList = [];
 
   @override
   void initState() {
@@ -59,6 +60,7 @@ class _HomeViewState extends State<HomeView> {
     _getSpecialRecommendList();
     _getInVogueList();
     _getOneStopList();
+    _getRecommendList();
   }
 
   void _getBannerList() async {
@@ -83,6 +85,11 @@ class _HomeViewState extends State<HomeView> {
 
   void _getOneStopList() async {
     _oneStopResult = await getOneStopListAPI();
+    setState(() {});
+  }
+
+  void _getRecommendList() async {
+    _recommendList = await getRecommendListAPI({"limit": 10});
     setState(() {});
   }
 
@@ -120,7 +127,7 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      HmMoreList(),
+      HmMoreList(recommendList: _recommendList),
     ];
   }
 }

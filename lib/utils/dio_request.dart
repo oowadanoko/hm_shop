@@ -32,8 +32,8 @@ class DioRequest {
     );
   }
 
-  Future<dynamic> get(String url, {Map<String, dynamic>? param}) {
-    return _handleResponse(_dio.get(url, queryParameters: param));
+  Future<dynamic> get(String url, {Map<String, dynamic>? params}) {
+    return _handleResponse(_dio.get(url, queryParameters: params));
   }
 
   Future<dynamic> _handleResponse(Future<Response<dynamic>> task) async {
