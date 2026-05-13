@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hm_shop/viewmodels/home.dart';
 
 class HmCategory extends StatefulWidget {
-  const HmCategory({super.key});
+  final List<CategoryItem> categoryList;
+
+  const HmCategory({super.key, required this.categoryList});
 
   @override
   State<HmCategory> createState() => _HmCategoryState();
@@ -11,18 +14,33 @@ class _HmCategoryState extends State<HmCategory> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 100,
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: widget.categoryList.length,
         itemBuilder: (context, index) {
           return Container(
-            width: 100,
+            width: 80,
+            height: 100,
             margin: EdgeInsets.symmetric(horizontal: 10),
-            color: Colors.blue,
             alignment: Alignment.center,
-            child: Text(
-              "分类${index + 1}",
-              style: TextStyle(color: Colors.white, fontSize: 18),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 240, 241, 243),
+              borderRadius: BorderRadius.circular(40),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network(
+                  widget.categoryList[index].picture,
+                  width: 40,
+                  height: 40,
+                ),
+                SizedBox(height: 5),
+                Text(
+                  widget.categoryList[index].name,
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                ),
+              ],
             ),
           );
         },
