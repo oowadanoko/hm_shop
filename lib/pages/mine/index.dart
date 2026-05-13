@@ -85,9 +85,14 @@ class _MineViewState extends State<MineView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "立即登录", // 有登录信息 显示用户信息 否则显示立即登录
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "/login");
+                  },
+                  child: Text(
+                    "立即登录", // 有登录信息 显示用户信息 否则显示立即登录
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
                 ),
               ],
             ),
