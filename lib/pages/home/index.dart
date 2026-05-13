@@ -17,7 +17,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: _getSlivers());
+    return CustomScrollView(slivers: _getSlivers(), controller: _controller);
   }
 
   List<BannerItem> _bannerList = [
@@ -51,6 +51,10 @@ class _HomeViewState extends State<HomeView> {
     subTypes: [],
   );
   List<GoodDetailItem> _recommendList = [];
+  final ScrollController _controller = ScrollController();
+  int _page = 1;
+  bool _isLoading = false;
+  bool _hasMore = true;
 
   @override
   void initState() {
@@ -61,6 +65,7 @@ class _HomeViewState extends State<HomeView> {
     _getInVogueList();
     _getOneStopList();
     _getRecommendList();
+    _registerEvent();
   }
 
   void _getBannerList() async {
@@ -89,8 +94,25 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void _getRecommendList() async {
-    _recommendList = await getRecommendListAPI({"limit": 10});
+    if (_isLoading || !_hasMore) {
+      return;
+    }
+    final limit = 8 * _page;
+    _isLoading = true;
+    _recommendList = await getRecommendListAPI({"limit": limit});
+    _isLoading = false;
+    _hasMore = _recommendList.length >= limit;
+    _page++;
     setState(() {});
+  }
+
+  void _registerEvent() {
+    _controller.addListener(() {
+      if (_controller.position.pixels >=
+          _controller.position.maxScrollExtent - 50) {
+        _getRecommendList();
+      }
+    });
   }
 
   List<Widget> _getSlivers() {
