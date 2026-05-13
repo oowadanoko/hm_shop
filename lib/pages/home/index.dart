@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hm_shop/api/home.dart';
 import 'package:hm_shop/components/home/hm_category.dart';
 import 'package:hm_shop/components/home/hm_hot.dart';
 import 'package:hm_shop/components/home/hm_more_list.dart';
@@ -19,20 +20,31 @@ class _HomeViewState extends State<HomeView> {
     return CustomScrollView(slivers: _getSlivers());
   }
 
-  final List<BannerItem> _bannerList = [
-    BannerItem(
-      id: "1",
-      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg",
-    ),
-    BannerItem(
-      id: "2",
-      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.png",
-    ),
-    BannerItem(
-      id: "3",
-      imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg",
-    ),
+  List<BannerItem> _bannerList = [
+    //   BannerItem(
+    //     id: "1",
+    //     imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg",
+    //   ),
+    //   BannerItem(
+    //     id: "2",
+    //     imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.png",
+    //   ),
+    //   BannerItem(
+    //     id: "3",
+    //     imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg",
+    //   ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _getBannerList();
+  }
+
+  void _getBannerList() async {
+    _bannerList = await getBannerListAPI();
+    setState(() {});
+  }
 
   List<Widget> _getSlivers() {
     return [
