@@ -19,7 +19,7 @@ class _MineViewState extends State<MineView> {
   bool _isLoading = false;
   bool _hasMore = true;
   final ScrollController _controller = ScrollController();
-  final UserController _userController = Get.put(UserController());
+  final UserController _userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
