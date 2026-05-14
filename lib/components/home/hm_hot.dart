@@ -20,8 +20,8 @@ class _HmHotState extends State<HmHot> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        padding: EdgeInsets.all(10),
-        height: 200,
+        padding: EdgeInsets.symmetric(horizontal: 4),
+        height: 190,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: widget.type == "inVogue"
@@ -39,6 +39,7 @@ class _HmHotState extends State<HmHot> {
                 SizedBox(width: 4),
                 Expanded(
                   child: Row(
+                    spacing: 10,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: _getChildren(),
                   ),
@@ -57,7 +58,7 @@ class _HmHotState extends State<HmHot> {
         Text(
           widget.type == "inVogue" ? "爆款推荐" : "一站买全",
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 16,
             color: const Color.fromARGB(255, 159, 53, 8),
             fontWeight: FontWeight.bold,
           ),
@@ -66,7 +67,7 @@ class _HmHotState extends State<HmHot> {
         Text(
           widget.type == "inVogue" ? "最受欢迎" : "精心优选",
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 10,
             color: const Color.fromARGB(255, 201, 89, 41),
           ),
         ),
@@ -116,7 +117,7 @@ class _HmHotState extends State<HmHot> {
                 "￥${list[index].price}",
                 style: TextStyle(
                   color: const Color.fromARGB(255, 160, 16, 16),
-                  fontSize: 12,
+                  fontSize: 8,
                 ),
               ),
             ),

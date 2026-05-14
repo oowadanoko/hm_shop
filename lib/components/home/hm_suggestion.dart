@@ -36,6 +36,7 @@ class _HmSuggestionState extends State<HmSuggestion> {
                 SizedBox(width: 4),
                 Expanded(
                   child: Row(
+                    spacing: 10,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: _getChildren(),
                   ),
@@ -126,7 +127,7 @@ class _HmSuggestionState extends State<HmSuggestion> {
               ),
               child: Text(
                 "￥${list[index].price}",
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                style: TextStyle(color: Colors.white, fontSize: 10),
               ),
             ),
           ],

@@ -39,7 +39,7 @@ class _HmMoreListState extends State<HmMoreList> {
               widget.recommendList[index].name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.black, fontSize: 16),
+              style: TextStyle(color: Colors.black, fontSize: 12),
             ),
           ),
           SizedBox(height: 6),
@@ -56,17 +56,17 @@ class _HmMoreListState extends State<HmMoreList> {
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                     ),
-                    children: [
-                      TextSpan(text: " "),
-                      TextSpan(
-                        text: "${widget.recommendList[index].price}",
-                        style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                    // children: [
+                    //   TextSpan(text: " "),
+                    //   TextSpan(
+                    //     text: "${widget.recommendList[index].price}",
+                    //     style: TextStyle(
+                    //       decoration: TextDecoration.lineThrough,
+                    //       color: Colors.grey,
+                    //       fontSize: 12,
+                    //     ),
+                    //   ),
+                    // ],
                   ),
                 ),
                 Text(
