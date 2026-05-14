@@ -24,9 +24,9 @@ class TokenManager {
   }
 
   Future<void> removeToken() async {
+    _token = "";
     SharedPreferences instance = await _getInstance();
     instance.remove(GlobalConstants.TOEKN_KEY);
-    _token = "";
   }
 }
 

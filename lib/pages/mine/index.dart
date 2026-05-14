@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:hm_shop/api/mine.dart';
 import 'package:hm_shop/components/home/hm_more_list.dart';
 import 'package:hm_shop/components/mine/hm_guess.dart';
+import 'package:hm_shop/stores/token_manager.dart';
 import 'package:hm_shop/stores/user_controller.dart';
 import 'package:hm_shop/viewmodels/home.dart';
+import 'package:hm_shop/viewmodels/user.dart';
 
 class MineView extends StatefulWidget {
   const MineView({super.key});
@@ -66,6 +68,43 @@ class _MineViewState extends State<MineView> {
     });
   }
 
+  Widget _getLogout() {
+    return _userController.user.value.id.isNotEmpty
+        ? Expanded(
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("提示"),
+                      content: Text("确认退出吗"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("取消"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            tokenManager.removeToken();
+                            _userController.userInfo = UserInfo.fromJSON({});
+                            Navigator.pop(context);
+                          },
+                          child: Text("确认"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Text("退出", textAlign: TextAlign.end),
+            ),
+          )
+        : Text("");
+  }
+
   Widget _buildHeader() {
     return Container(
       decoration: BoxDecoration(
@@ -113,6 +152,7 @@ class _MineViewState extends State<MineView> {
               ],
             ),
           ),
+          Obx(() => _getLogout()),
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hm_shop/api/user.dart';
 import 'package:hm_shop/stores/token_manager.dart';
 import 'package:hm_shop/stores/user_controller.dart';
+import 'package:hm_shop/utils/loading_dialog.dart';
 import 'package:hm_shop/utils/toast_utils.dart';
 import 'package:hm_shop/viewmodels/user.dart';
 
@@ -75,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() async {
     try {
+      LoadingDialog.show(context, msg: "努力登录中");
       UserInfo info = await loginAPI({
         "account": _phoneController.text,
         "password": _codeController.text,
@@ -88,6 +90,10 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       if (mounted) {
         ToastUtils.showToast(context, (e as DioException).message ?? "登录失败");
+      }
+    } finally {
+      if (mounted) {
+        LoadingDialog.hide(context);
       }
     }
   }
